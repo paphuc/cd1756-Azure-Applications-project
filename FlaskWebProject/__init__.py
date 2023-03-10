@@ -10,10 +10,15 @@ from flask_session import Session
 
 app = Flask(__name__)
 app.config.from_object(Config)
+app.logger.setLevel(logging.INFO)
+streamHandler = logging.StreamHandler()
+streamHandler.setLevel(logging.INFO)
+app.logger.addHandler(streamHandler)
 # TODO: Add any logging levels and handlers with app.logger
 Session(app)
 db = SQLAlchemy(app)
 login = LoginManager(app)
 login.login_view = 'login'
+wsgi_app = app.wsgi_app
 
 import FlaskWebProject.views
